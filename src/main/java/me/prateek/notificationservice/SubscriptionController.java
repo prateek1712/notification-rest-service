@@ -8,7 +8,7 @@ import java.util.Map;
 @RestController
 public class SubscriptionController {
 
-    //Get Subscription Details Using id eg. /subscription?id=2
+    //Get subscription Details Using id eg. /subscription?id=2
 
     @RequestMapping(value = "/subscription", method = RequestMethod.GET)
     public String getSubscription(@RequestParam long id) {
@@ -16,7 +16,7 @@ public class SubscriptionController {
         return "Hello World";
     }
 
-    //Delete(Cancel) a Subscription
+    //Delete(Cancel) a subscription
 
     @RequestMapping(value = "/subscription/{id}", method = RequestMethod.PUT)
     public String deleteSubscription() {
@@ -24,7 +24,7 @@ public class SubscriptionController {
         return "Uou";
     }
 
-    //New Subscription
+    //New subscription
 
     @RequestMapping(value = "/subscription", method = RequestMethod.POST)
     public Subscription newSubscription(@RequestBody Map<String, String> body) {

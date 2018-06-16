@@ -7,10 +7,10 @@ import java.util.Set;
 
 //A Constant Class
 final class SilverSubscription extends SubscriptionType{
-    //Subscription ID
+    //subscription ID
     public static final long ID = 1;
 
-    //Price of Subscription
+    //Price of subscription
     public static final long PRICE = 49;
 
     //Number of Notifications Allowed in a Day
@@ -24,6 +24,13 @@ final class SilverSubscription extends SubscriptionType{
     {
         allowedNotifTypes = new HashSet<Notification>();
         allowedNotifTypes.add(Notification.EMAIL);
+    }
+
+    @Override
+    public boolean ifAllowedNotif(Notification n)
+    {
+        if(allowedNotifTypes.contains(n)) return true;
+        return false;
     }
 
     private SilverSubscription(){ }; //To disallow instantiation of class

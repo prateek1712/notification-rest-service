@@ -8,10 +8,10 @@ import java.util.Set;
 //A Constant Class
 final class GoldSubscription extends SubscriptionType{
 
-    //Subscription ID
+    //subscription ID
     public static final long ID = 2;
 
-    //Price of Subscription
+    //Price of subscription
     public static final long PRICE = 99;
 
     //Number of Notifications Allowed in a Day
@@ -28,6 +28,7 @@ final class GoldSubscription extends SubscriptionType{
         allowedNotifTypes.add(Notification.EMAIL);
     }
 
+    @Override
     public boolean ifAllowedNotif(Notification n)
     {
         if(allowedNotifTypes.contains(n)) return true;
