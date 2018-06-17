@@ -1,4 +1,4 @@
-package me.prateek.notificationservice;
+package me.prateek.notificationservice.subscription;
 
 import me.prateek.notificationservice.subscription.Subscription;
 import org.springframework.web.bind.annotation.*;
