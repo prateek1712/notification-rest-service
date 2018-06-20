@@ -9,19 +9,31 @@ import java.util.Set;
 final class PlatinumSubscription extends SubscriptionType{
 
     //subscription ID
-    public static final long ID = 3;
+    public final int ID = 3;
 
     //Price of subscription
-    public static final long PRICE = 499;
+    public final int PRICE = 500;
 
     //Number of Notifications Allowed in a Day
-    public static final long NOTIFS_ALLOWED_PER_DAY = Long.MAX_VALUE; //Practically Unlimited
+    public final int NOTIFS_ALLOWED_PER_DAY = Integer.MAX_VALUE; //Practically Unlimited
+
+    public int getId() {
+        return ID;
+    }
+
+    public int getPrice() {
+        return PRICE;
+    }
+
+    public int getNotifsAllowedPerDay() {
+        return NOTIFS_ALLOWED_PER_DAY;
+    }
 
     //Types of Notifications Allowed: EMAIL, SMS, PUSH
-    public static final Set<Notification> allowedNotifTypes;
+    public final Set<Notification> allowedNotifTypes;
 
-    //Static Initialisation block for allowedNotifTypes : Allowed All
-    static
+    // Initialisation block for allowedNotifTypes : Allowed All
+
     {
         allowedNotifTypes = new HashSet<Notification>(); //HashSet, since the order doesn't matter
         for(Notification n : Notification.values())
@@ -38,6 +50,16 @@ final class PlatinumSubscription extends SubscriptionType{
     }
 
     private PlatinumSubscription(){ }; //To disallow instantiation of class
+
+    public static PlatinumSubscription instance = null;
+    public static PlatinumSubscription getInstance()
+    {
+        if(instance == null)
+        {
+            instance = new PlatinumSubscription();
+        }
+        return instance;
+    }
 }
 
 

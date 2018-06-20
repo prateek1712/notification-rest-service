@@ -1,9 +1,6 @@
 package me.prateek.notificationservice.subscription;
 
-import me.prateek.notificationservice.subscription.Subscription;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 public class SubscriptionController {
@@ -26,10 +23,12 @@ public class SubscriptionController {
 
     //New subscription
 
+/*
     @RequestMapping(value = "/subscription", method = RequestMethod.POST)
     public Subscription newSubscription(@RequestBody Map<String, String> body) {
         //TODO Complete this POST method
         return new Subscription();
     }
+*/
 
 }

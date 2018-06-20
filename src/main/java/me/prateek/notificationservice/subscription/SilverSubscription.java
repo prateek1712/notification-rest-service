@@ -8,19 +8,31 @@ import java.util.Set;
 //A Constant Class
 final class SilverSubscription extends SubscriptionType{
     //subscription ID
-    public static final long ID = 1;
+    public  final int ID = 1;
 
-    //Price of subscription
-    public static final long PRICE = 49;
+    //Price of Subscriptiontype
+    public  final int PRICE = 49;
 
     //Number of Notifications Allowed in a Day
-    public static final long NOTIFS_ALLOWED_PER_DAY = 10000000;
+    public  final int NOTIFS_ALLOWED_PER_DAY = 10000000;
+
+    public int getId() {
+        return ID;
+    }
+
+    public int getPrice() {
+        return PRICE;
+    }
+
+    public int getNotifsAllowedPerDay() {
+        return NOTIFS_ALLOWED_PER_DAY;
+    }
 
     //Types of Notifications Allowed: EMAIL, SMS, PUSH
-    public static final Set<Notification> allowedNotifTypes;
+    public  final Set<Notification> allowedNotifTypes;
 
-    //Static Initialisation block for allowedNotifTypes : Allowed EMAIL only
-    static
+    // Initialisation block for allowedNotifTypes : Allowed EMAIL only
+
     {
         allowedNotifTypes = new HashSet<Notification>();
         allowedNotifTypes.add(Notification.EMAIL);
@@ -34,4 +46,14 @@ final class SilverSubscription extends SubscriptionType{
     }
 
     private SilverSubscription(){ }; //To disallow instantiation of class
+
+    public static SilverSubscription instance = null;
+    public static SilverSubscription getInstance()
+    {
+        if(instance == null)
+        {
+            instance = new SilverSubscription();
+        }
+        return instance;
+    }
 }

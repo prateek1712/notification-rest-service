@@ -1,6 +1,7 @@
 package me.prateek.notificationservice.client;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Client")
@@ -8,13 +9,15 @@ public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ClientID")
-    private long id;
+    @Column(name = "ClientID" , nullable = false)
+    private Integer id;
 
-    @Column(name = "ClientName")
+    @NotNull
+    @Column(name = "ClientName" , nullable = false)
     private String name;
 
-    @Column(name = "ClientAddress")
+    @NotNull
+    @Column(name = "ClientAddress" , nullable = false)
     private String address;
 
     public Client(){ }
@@ -24,17 +27,17 @@ public class Client {
         this.address = address;
     }
 
-    public Client(long id, String name, String address) {
+    public Client(Integer id, String name, String address) {
         this.id = id;
         this.name = name;
         this.address = address;
     }
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
