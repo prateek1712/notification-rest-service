@@ -15,6 +15,17 @@ public class ClientService {
 
     public Client addClient(String name, String address, String subscrType)
     {
+        //TODO Input Validation for subscrType string
+        boolean b = false;
+        String[] allowed = {"GOLD", "SILVER", "PLATINUM"};
+        for(String s : allowed)
+        {
+            if(subscrType.toUpperCase() == s)
+            {
+                b = true;
+            }
+        }
+        if(!b) return null;
         //Create new client
         Client c = new Client(name, address);
         Client c_saved = clientRepository.save(c);
