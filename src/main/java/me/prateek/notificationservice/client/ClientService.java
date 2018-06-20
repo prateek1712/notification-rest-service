@@ -13,9 +13,11 @@ public class ClientService {
     @Autowired
     private SubscriptionService subscriptionService;
 
+    public Client getClient(Integer id){ return clientRepository.getOne(id); }
+
     public Client addClient(String name, String address, String subscrType)
     {
-        //TODO Input Validation for subscrType string
+        //Input Validation for subscrType string
         boolean b = false;
         String[] allowed = {"GOLD", "SILVER", "PLATINUM"};
         for(String s : allowed)
@@ -26,6 +28,7 @@ public class ClientService {
             }
         }
         if(!b) return null;
+
         //Create new client
         Client c = new Client(name, address);
         Client c_saved = clientRepository.save(c);
@@ -36,8 +39,19 @@ public class ClientService {
         return c_saved;
     }
 
-    public void deleteClient(Integer id)
+    public boolean deleteClient(Integer clientId)
     {
+        subscriptionService.deleteSubscription(clientId);
+        clientRepository.deleteById(clientId);
+        if(clientRepository.existsById(clientId))
+        {
+            return false;
+        }
+        return true;
+    }
 
+    public Subscription getClientSubscription(Integer clientId)
+    {
+        return subscriptionService.getSubscriptionByClientId(clientId);
     }
 }

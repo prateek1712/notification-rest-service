@@ -14,8 +14,14 @@ public class SubscriptionService {
         subscriptionRepository.save(s);
     }
 
-    public void deleteSubscription(Integer id)
+    public void deleteSubscription(Integer clientId)
     {
+        Subscription s = subscriptionRepository.findByClientId(clientId);
+        subscriptionRepository.deleteById(s.getId());
+    }
 
+    public Subscription getSubscriptionByClientId(Integer clientId)
+    {
+        return subscriptionRepository.findByClientId(clientId);
     }
 }

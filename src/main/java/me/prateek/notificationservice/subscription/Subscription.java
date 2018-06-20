@@ -29,11 +29,17 @@ public class Subscription {
     @Column(name = "Price" , nullable = false)
     private Integer price;
 
+    @Column(name = "DailyNotifLimit", nullable = false)
+    private Integer dailyNotifLimit;
+
     @Column(name = "NotifsSentToday", nullable = false)
     private Integer notifsSentToday;
 
     @Transient
     private SubscriptionType s = null;
+
+    //Default Constructor needed by Spring JPA
+    public Subscription(){ }
 
     public Subscription(Integer clientId, String subType)
     {
@@ -69,7 +75,10 @@ public class Subscription {
         this.expiryDate = Date.valueOf(thirtyDaysPlusToday);
 
         //5. Set Price
-        setPrice();
+        this.price = s.getPrice();
+
+        //6. Set Daily Notification Limit
+        this.dailyNotifLimit = s.getNotifsAllowedPerDay();
     }
 
     public Integer getId() {
@@ -98,11 +107,8 @@ public class Subscription {
 
     public Integer getNotifsSentToday() { return notifsSentToday; }
 
-    public void setPrice() {
-        if(s != null)
-        {
-            this.price = s.getPrice();
-        }
+    public Integer getDailyNotifLimit() {
+        return dailyNotifLimit;
     }
 
     public boolean isSubscriptionActive() //Check if subscription is active

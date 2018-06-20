@@ -1,6 +1,7 @@
 package me.prateek.notificationservice.client;
 
 import javafx.scene.SubScene;
+import me.prateek.notificationservice.subscription.Subscription;
 import me.prateek.notificationservice.subscription.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +18,20 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
+
     //Get Client Details Using id eg. /clients?id=2
     @RequestMapping(value = "/clients", method = RequestMethod.GET)
     public Client getClient(@RequestParam Integer id) {
-        return clientRepository.getOne(id);
+        return clientService.getClient(id);
     }
+
+    //Get Client Subscription Details Using id eg. /clients/{id}/subscription
+    @RequestMapping(value = "/clients/{id}/subscription", method = RequestMethod.GET)
+    public Subscription getSubscription(@PathVariable Integer id) {
+
+        return clientService.getClientSubscription(id);
+    }
+
 
     //Create New Client
     @RequestMapping(value = "/clients", method = RequestMethod.POST)
@@ -41,8 +51,9 @@ public class ClientController {
     @RequestMapping(value = "/clients/{id}", method = RequestMethod.DELETE)
     public String deleteClient(@PathVariable Integer id) {
         //TODO Complete this DELETE method
-        clientRepository.deleteById(id);
-        return "Client with id "+id+" deleted" ;
+        if(clientService.deleteClient(id))
+            return "Client with id "+id+" deleted" ;
+        else return "Client Not Found";
     }
 
     //Return Number of Clients
