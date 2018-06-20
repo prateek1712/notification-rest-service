@@ -20,7 +20,7 @@ public class ClientService {
         String[] allowed = {"GOLD", "SILVER", "PLATINUM"};
         for(String s : allowed)
         {
-            if(subscrType.toUpperCase() == s)
+            if(subscrType.toUpperCase().equals(s))
             {
                 b = true;
             }
