@@ -43,4 +43,13 @@ public class UserService {
         return userRepository.count();
     }
 
+    public String blockUnblockUser(Integer id, Boolean status)
+    {
+        //TODO Send Appropriate Response
+        User u = userRepository.getOne(id);
+        u.setBlocked(status);
+        userRepository.save(u);
+        return "User with userID" + id + "blocked successfully";
+    }
+
 }

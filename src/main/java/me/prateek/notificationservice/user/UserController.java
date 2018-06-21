@@ -41,4 +41,22 @@ public class UserController {
     {
         return userService.countUsers();
     }
+
+    //Block a User
+    @RequestMapping(value = "/users/{id}/block", method = RequestMethod.PUT)
+    public String blockUser(@PathVariable Integer id)
+    {
+        //TODO InvalidParameter Handling
+        userService.blockUnblockUser(id, true);
+        return "User with userID" + id + " blocked";
+    }
+
+    //Unblock a User
+    @RequestMapping(value = "/users/{id}/unblock", method = RequestMethod.PUT)
+    public String unblockUser(@PathVariable Integer id)
+    {
+        //TODO InvalidParameter Handling
+        userService.blockUnblockUser(id, false);
+        return "User with userID" + id + " unblocked";
+    }
 }

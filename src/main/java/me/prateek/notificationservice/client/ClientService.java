@@ -1,3 +1,4 @@
+//SERVICE CLASS FOR 'CLIENT' MODEL
 package me.prateek.notificationservice.client;
 
 import me.prateek.notificationservice.subscription.Subscription;

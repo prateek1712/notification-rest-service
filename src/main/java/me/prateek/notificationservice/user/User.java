@@ -2,6 +2,8 @@ package me.prateek.notificationservice.user;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -22,6 +24,10 @@ public class User{
 
     @Column(name = "Email", nullable = false)
     private String email;
+
+    @Column(name = "IsBlocked")
+    @Type(type="yes_no")
+    private Boolean isBlocked = false;
 
     //TODO Add deviceType field
 
@@ -63,5 +69,13 @@ public class User{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
     }
 }

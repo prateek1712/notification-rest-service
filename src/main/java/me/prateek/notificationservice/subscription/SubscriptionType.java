@@ -2,7 +2,7 @@ package me.prateek.notificationservice.subscription;
 
 import me.prateek.notificationservice.notification.NotificationType;
 
-abstract public class SubscriptionType {
+public abstract class SubscriptionType {
     //TODO Complete SubscriptionType
 
     abstract public int getId();
@@ -14,7 +14,7 @@ abstract public class SubscriptionType {
     abstract public boolean ifAllowedNotif(NotificationType n);
 
     //Constructor; can only be called from Subclasses
-    protected SubscriptionType(){
+    //protected SubscriptionType(){
 
-    }
+    //}
 }

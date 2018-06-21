@@ -36,7 +36,7 @@ public class Subscription {
     private Integer notifsSentToday;
 
     @Transient
-    private SubscriptionType s = null;
+    private SubscriptionType subscriptionTypeInstance = null;
 
     //Default Constructor needed by Spring JPA
     public Subscription(){ }
@@ -48,24 +48,7 @@ public class Subscription {
 
 
         //2. Set type of Subscription
-        subscriptionType = subType.toUpperCase();
-        switch(subscriptionType)
-        {
-            case "SILVER":
-                s  = SilverSubscription.getInstance();
-                break;
-
-            case "GOLD":
-                s = GoldSubscription.getInstance();
-                break;
-
-            case "PLATINUM":
-                s = PlatinumSubscription.getInstance();
-                break;
-
-            default:
-                return;
-        }
+        setSubscriptionTypeInstance(subType);
 
         //3. Set Notifications Sent
         this.notifsSentToday = 0;
@@ -75,10 +58,10 @@ public class Subscription {
         this.expiryDate = Date.valueOf(thirtyDaysPlusToday);
 
         //5. Set Price
-        this.price = s.getPrice();
+        this.price = subscriptionTypeInstance.getPrice();
 
         //6. Set Daily NotificationType Limit
-        this.dailyNotifLimit = s.getNotifsAllowedPerDay();
+        this.dailyNotifLimit = subscriptionTypeInstance.getNotifsAllowedPerDay();
     }
 
     public Integer getId() {
@@ -123,12 +106,46 @@ public class Subscription {
 
     public boolean ifDailyLimitReached() //Check if daily notification limit reached
     {
-        Integer limit = s.getNotifsAllowedPerDay();
+        Integer limit = subscriptionTypeInstance.getNotifsAllowedPerDay();
         if(notifsSentToday < limit)
         {
             return true;
         }
         return false;
+    }
+
+    public void setSubscriptionTypeInstance(String subType)
+    {
+        if(subscriptionTypeInstance == null)
+        {
+            subscriptionType = subType.toUpperCase();
+            switch(subscriptionType)
+            {
+                case "SILVER":
+                    subscriptionTypeInstance  = SilverSubscription.getInstance();
+                    break;
+
+                case "GOLD":
+                    subscriptionTypeInstance = GoldSubscription.getInstance();
+                    break;
+
+                case "PLATINUM":
+                    subscriptionTypeInstance = PlatinumSubscription.getInstance();
+                    break;
+
+                default:
+                    return;
+            }
+        }
+        else return;
+    }
+
+    public SubscriptionType getSubscriptionTypeInstance() {
+        if(subscriptionType == null)
+        {
+            setSubscriptionTypeInstance(getSubscriptionType());
+        }
+        return subscriptionTypeInstance;
     }
 
     /*public static void main(String[] args) {

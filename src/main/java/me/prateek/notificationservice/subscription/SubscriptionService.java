@@ -1,3 +1,4 @@
+////SERVICE CLASS FOR 'SUBSCRIPTION' MODEL
 package me.prateek.notificationservice.subscription;
 
 import org.springframework.beans.factory.annotation.Autowired;
