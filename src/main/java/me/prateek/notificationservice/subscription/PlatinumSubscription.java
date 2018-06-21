@@ -1,6 +1,6 @@
 package me.prateek.notificationservice.subscription;
 
-import me.prateek.notificationservice.Notification;
+import me.prateek.notificationservice.notification.NotificationType;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -30,20 +30,20 @@ final class PlatinumSubscription extends SubscriptionType{
     }
 
     //Types of Notifications Allowed: EMAIL, SMS, PUSH
-    public final Set<Notification> allowedNotifTypes;
+    public final Set<NotificationType> allowedNotifTypes;
 
     // Initialisation block for allowedNotifTypes : Allowed All
 
     {
-        allowedNotifTypes = new HashSet<Notification>(); //HashSet, since the order doesn't matter
-        for(Notification n : Notification.values())
+        allowedNotifTypes = new HashSet<NotificationType>(); //HashSet, since the order doesn't matter
+        for(NotificationType n : NotificationType.values())
         {
             allowedNotifTypes.add(n);
         }
     }
 
     @Override
-    public boolean ifAllowedNotif(Notification n)
+    public boolean ifAllowedNotif(NotificationType n)
     {
         if(allowedNotifTypes.contains(n)) return true;
         return false;

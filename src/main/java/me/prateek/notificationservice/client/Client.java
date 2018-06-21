@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "Client")
+//@Table(name = "Client")
 public class Client {
 
     @Id

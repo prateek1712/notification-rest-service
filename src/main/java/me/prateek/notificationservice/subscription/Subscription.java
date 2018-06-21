@@ -77,7 +77,7 @@ public class Subscription {
         //5. Set Price
         this.price = s.getPrice();
 
-        //6. Set Daily Notification Limit
+        //6. Set Daily NotificationType Limit
         this.dailyNotifLimit = s.getNotifsAllowedPerDay();
     }
 

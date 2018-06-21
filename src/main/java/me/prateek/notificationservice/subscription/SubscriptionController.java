@@ -1,4 +1,5 @@
-package me.prateek.notificationservice.subscription;
+//NOT IN USE RIGHT NOW
+/*package me.prateek.notificationservice.subscription;
 
 import org.springframework.web.bind.annotation.*;
 
@@ -23,12 +24,12 @@ public class SubscriptionController {
 
     //New subscription
 
-/*
+*//*
     @RequestMapping(value = "/subscription", method = RequestMethod.POST)
     public Subscription newSubscription(@RequestBody Map<String, String> body) {
         //TODO Complete this POST method
         return new Subscription();
     }
-*/
+*//*
 
-}
+}*/

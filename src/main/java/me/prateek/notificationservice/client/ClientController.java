@@ -1,8 +1,6 @@
 package me.prateek.notificationservice.client;
 
-import javafx.scene.SubScene;
 import me.prateek.notificationservice.subscription.Subscription;
-import me.prateek.notificationservice.subscription.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,7 +56,7 @@ public class ClientController {
 
     //Return Number of Clients
     @RequestMapping(value = "/clients/total", method = RequestMethod.GET)
-    public double numberClients()
+    public Long numberClients()
     {
         return clientRepository.count();
     }
