@@ -1,10 +1,20 @@
 package me.prateek.notificationservice.subscription;
 
-abstract public class SubscriptionType {
-    //TODO SubscriptionType
+import me.prateek.notificationservice.notification.NotificationType;
+
+public abstract class SubscriptionType {
+    //TODO Complete SubscriptionType
+
+    abstract public int getId();
+
+    abstract public int getPrice();
+
+    abstract public int getNotifsAllowedPerDay();
+
+    abstract public boolean ifAllowedNotif(NotificationType n);
 
     //Constructor; can only be called from Subclasses
-    protected SubscriptionType(){
+    //protected SubscriptionType(){
 
-    }
+    //}
 }
