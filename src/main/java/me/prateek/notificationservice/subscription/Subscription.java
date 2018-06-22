@@ -106,12 +106,13 @@ public class Subscription {
 
     public boolean ifDailyLimitReached() //Check if daily notification limit reached
     {
+        setSubscriptionTypeInstance(subscriptionType);
         Integer limit = subscriptionTypeInstance.getNotifsAllowedPerDay();
         if(notifsSentToday < limit)
         {
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     public void setSubscriptionTypeInstance(String subType)
@@ -147,19 +148,4 @@ public class Subscription {
         }
         return subscriptionTypeInstance;
     }
-
-    /*public static void main(String[] args) {
-        Subscription s = new Subscription(2,"gold");
-
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        LocalDate now = LocalDate.now();
-        DayOfWeek d = now.getDayOfWeek();
-        LocalDate sixDaysPlus = now.plusDays(30);
-        String s1 = sixDaysPlus.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        System.out.println(now); //2018-06-20
-        System.out.println(s1); //20180720
-        System.out.println(d); //WEDNESDAY
-        //Date d1 = Date.valueOf(now);
-        //System.out.println(d1); //2018-06-20
-    }*/
 }

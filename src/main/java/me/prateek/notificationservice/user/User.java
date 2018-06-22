@@ -2,7 +2,6 @@ package me.prateek.notificationservice.user;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -26,7 +25,7 @@ public class User{
     private String email;
 
     @Column(name = "IsBlocked")
-    @Type(type="yes_no")
+    @Type(type="yes_no") //To save Y or N in the database as character
     private Boolean isBlocked = false;
 
     //TODO Add deviceType field

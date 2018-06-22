@@ -15,8 +15,9 @@ public class NotificationService {
     public Notification addNotification(Integer clientId, Integer userId, String notifType, String message)
     {
         Notification newNotif = new Notification(clientId,userId,notifType,message);
-        Notification newNotif_saved = notificationRepository.save(newNotif);
-        return newNotif_saved;
+        return notificationRepository.save(newNotif);
     }
+
+    //TODO Get Notification Count within a Date Range for a Client
 
 }

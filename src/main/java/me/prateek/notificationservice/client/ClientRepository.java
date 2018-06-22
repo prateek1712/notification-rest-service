@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface ClientRepository extends JpaRepository<Client, Integer> {
 
-    @Query(value = "SELECT * FROM Client c where c.title = ?0 AND t.description = ?1", nativeQuery=true)
+    @Query(value = "UPDATE Client(Notif) SET VALUESFROM Client c where c.title = ?0 AND t.description = ?1", nativeQuery=true)
     List<String> getClients();
 
 }

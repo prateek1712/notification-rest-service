@@ -10,9 +10,9 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User getUser(Integer id)
+    public User getUser(Integer userId)
     {
-        return userRepository.getOne(id);
+        return userRepository.getOne(userId);
     }
 
     public User addUser(String name, Integer phone, String email)
@@ -22,9 +22,9 @@ public class UserService {
        return u;
     }
 
-    public User updateUser(Integer id, String name, Integer phone, String email)
+    public User updateUser(Integer userId, String name, Integer phone, String email)
     {
-        User u = userRepository.getOne(id);
+        User u = userRepository.getOne(userId);
         u.setName(name);
         u.setPhone(phone);
         u.setEmail(email);
@@ -43,13 +43,13 @@ public class UserService {
         return userRepository.count();
     }
 
-    public String blockUnblockUser(Integer id, Boolean status)
+    public String blockUnblockUser(Integer userId, Boolean status)
     {
         //TODO Send Appropriate Response
-        User u = userRepository.getOne(id);
+        User u = userRepository.getOne(userId);
         u.setBlocked(status);
         userRepository.save(u);
-        return "User with userID" + id + "blocked successfully";
+        return "User with userID" + userId + "blocked successfully";
     }
 
 }

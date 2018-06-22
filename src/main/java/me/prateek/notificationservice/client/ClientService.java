@@ -55,4 +55,6 @@ public class ClientService {
     {
         return subscriptionService.getSubscriptionByClientId(clientId);
     }
+
+
 }
