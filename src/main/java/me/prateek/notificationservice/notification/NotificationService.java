@@ -46,7 +46,7 @@ public class NotificationService {
                 {
                     if(!userService.getUser(userId).isBlocked()) //Check if User is Not Blocked
                     {
-
+                        //ALL CHECKS PASSED
                         Notification newNotif = new Notification(clientId,userId,type,message);
                         //Add Notification Count for Client
                         subscriptionService.incrementNotifCount(clientId);
