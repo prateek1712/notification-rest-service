@@ -1,9 +1,12 @@
 package me.prateek.notificationservice.client;
 
+import me.prateek.notificationservice.exception.IllegalTypeException;
+import me.prateek.notificationservice.exception.NullKeyException;
 import me.prateek.notificationservice.subscription.Subscription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -16,11 +19,23 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
+    public boolean checkIfIdInteger(String id)
+    {
+        try {
+            Integer.parseInt(id);
+        }
+        catch(Exception e) {
+            throw new IllegalTypeException("id","Integer");
+        }
+        return true;
+    }
 
     //Get Client Details Using id eg. /clients?id=2
     @RequestMapping(value = "/clients", method = RequestMethod.GET)
-    public Client getClient(@RequestParam Integer id) {
-        return clientService.getClient(id);
+    public Client getClient(@RequestParam String id)
+    {
+        checkIfIdInteger(id);
+        return clientService.getClient(Integer.parseInt(id));
     }
 
     //Get Client Subscription Details Using id eg. /clients/{id}/subscription
@@ -59,5 +74,12 @@ public class ClientController {
     public Long numberClients()
     {
         return clientRepository.count();
+    }
+
+    //Returns Complete List of Clients
+    @RequestMapping(value = "/clients/list", method = RequestMethod.GET)
+    public List<Client> getAllClients()
+    {
+        return clientService.getAllClients();
     }
 }

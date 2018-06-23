@@ -7,6 +7,7 @@ import me.prateek.notificationservice.subscription.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,12 +20,12 @@ public class ClientService {
 
     public Client getClient(Integer id){
 
-            Optional<Client> client = clientRepository.findById(id);
-            if(!client.isPresent())
-            {
-                throw new ResourceNotFoundException(id,"Client");
-            }
-            return client.get();
+        Optional<Client> client = clientRepository.findById(id);
+        if(!client.isPresent())
+        {
+            throw new ResourceNotFoundException(id,"Client");
+        }
+        return client.get();
     }
 
     public Client addClient(String name, String address, String subscrType)
@@ -65,6 +66,11 @@ public class ClientService {
     public Subscription getClientSubscription(Integer clientId)
     {
         return subscriptionService.getSubscriptionByClientId(clientId);
+    }
+
+    public List<Client> getAllClients()
+    {
+        return clientRepository.findAll();
     }
 
 

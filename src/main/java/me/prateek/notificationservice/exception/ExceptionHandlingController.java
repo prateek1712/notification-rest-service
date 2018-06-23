@@ -1,3 +1,4 @@
+//Controller to Handle Exceptions in Own Way i.e Customize Responses
 package me.prateek.notificationservice.exception;
 
 import org.springframework.http.HttpStatus;
@@ -23,5 +24,4 @@ public class ExceptionHandlingController extends ResponseEntityExceptionHandler 
 
         return new ResponseEntity<ExceptionResponse>(response, HttpStatus.NOT_FOUND);
     }
-
 }

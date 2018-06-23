@@ -3,6 +3,7 @@ package me.prateek.notificationservice.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -58,5 +59,12 @@ public class UserController {
         //TODO InvalidParameter Handling
         userService.blockUnblockUser(id, false);
         return "User with userID" + id + " unblocked";
+    }
+
+    //Get list of ALL Users
+    @RequestMapping(value = "/users/list", method = RequestMethod.GET)
+    public List<User> getAllUsers()
+    {
+        return userService.getAllUsers();
     }
 }
