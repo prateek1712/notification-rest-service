@@ -2,6 +2,8 @@ package me.prateek.notificationservice.subscription;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.sql.Date;
@@ -35,6 +37,7 @@ public class Subscription {
     @Column(name = "NotifsSentToday", nullable = false)
     private Integer notifsSentToday;
 
+    @JsonIgnore
     @Transient
     private SubscriptionType subscriptionTypeInstance = null;
 
