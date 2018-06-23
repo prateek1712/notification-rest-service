@@ -16,11 +16,11 @@ public class Client {
     private Integer id;
 
     @NotNull
-    @Column(name = "ClientName" , nullable = false)
+    @Column(name = "Name" , nullable = false)
     private String name;
 
     @NotNull
-    @Column(name = "ClientAddress" , nullable = false)
+    @Column(name = "Address" , nullable = false)
     private String address;
 
     public Client(){ }

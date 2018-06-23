@@ -6,6 +6,8 @@ import me.prateek.notificationservice.subscription.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ClientService {
     @Autowired
@@ -14,7 +16,16 @@ public class ClientService {
     @Autowired
     private SubscriptionService subscriptionService;
 
-    public Client getClient(Integer id){ return clientRepository.getOne(id); }
+    public Client getClient(Integer id) throws ClientNotFoundException {
+        try {
+            Client client = clientRepository.getOne(id);
+            return client;
+        }
+        catch(Exception e)
+        {
+            throw new ClientNotFoundException("No such Client With id = "+id+" found");
+        }
+    }
 
     public Client addClient(String name, String address, String subscrType)
     {
