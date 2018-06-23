@@ -1,6 +1,7 @@
 //SERVICE CLASS FOR 'CLIENT' MODEL
 package me.prateek.notificationservice.client;
 
+import me.prateek.notificationservice.exception.ResourceNotFoundException;
 import me.prateek.notificationservice.subscription.Subscription;
 import me.prateek.notificationservice.subscription.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,15 +17,14 @@ public class ClientService {
     @Autowired
     private SubscriptionService subscriptionService;
 
-    public Client getClient(Integer id) throws ClientNotFoundException {
-        try {
-            Client client = clientRepository.getOne(id);
-            return client;
-        }
-        catch(Exception e)
-        {
-            throw new ClientNotFoundException("No such Client With id = "+id+" found");
-        }
+    public Client getClient(Integer id){
+
+            Optional<Client> client = clientRepository.findById(id);
+            if(!client.isPresent())
+            {
+                throw new ResourceNotFoundException(id,"Client");
+            }
+            return client.get();
     }
 
     public Client addClient(String name, String address, String subscrType)
