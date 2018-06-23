@@ -43,8 +43,7 @@ public class ClientService {
         if(!b) return null;
 
         //Create new client
-        Client c = new Client(name, address);
-        Client c_saved = clientRepository.save(c);
+        Client c_saved = clientRepository.save(new Client(name, address));
 
         //Create new subscription for the client
         Integer clientId = c_saved.getId();
@@ -72,6 +71,4 @@ public class ClientService {
     {
         return clientRepository.findAll();
     }
-
-
 }

@@ -40,9 +40,9 @@ public class ClientController {
 
     //Get Client Subscription Details Using id eg. /clients/{id}/subscription
     @RequestMapping(value = "/clients/{id}/subscription", method = RequestMethod.GET)
-    public Subscription getSubscription(@PathVariable Integer id) {
-
-        return clientService.getClientSubscription(id);
+    public Subscription getSubscription(@PathVariable String id) {
+        checkIfIdInteger(id);
+        return clientService.getClientSubscription(Integer.parseInt(id));
     }
 
 
