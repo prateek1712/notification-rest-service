@@ -39,10 +39,10 @@ public class Subscription {
     @Column(name = "NotifsSentToday", nullable = false)
     private Integer notifsSentToday;
 
-    @Transient //NOT STORING IN THE DATABASE, BUT RETURNING AS JSON
+    @Transient //Not storing in database, but RETURNING AS JSON USING @PostLoad
     private Set<NotificationType> allowedNotifTypes;
 
-    @JsonIgnore
+    @JsonIgnore //Ignoring in JSON Output(Serialization)
     @Transient
     private SubscriptionType subscriptionTypeInstance = null;
 
@@ -129,8 +129,8 @@ public class Subscription {
     public boolean ifDailyLimitReached() //Check if daily notification limit reached
     {
         setSubscriptionTypeInstance(subscriptionType);
-        Integer limit = subscriptionTypeInstance.getNotifsAllowedPerDay();
-        if(notifsSentToday < limit)
+        //Integer limit = subscriptionTypeInstance.getNotifsAllowedPerDay();
+        if(notifsSentToday < dailyNotifLimit) //Change made from limit to dailyNotifLimit to dynamically get data from DB
         {
             return false;
         }
@@ -171,7 +171,7 @@ public class Subscription {
 
     @PostLoad //This function executes after a database retrieval by Spring JPA Repository(any method)
     public void setAllowedNotifTypes() {
-        SubscriptionType s = this.getSubscriptionTypeInstance();
+        SubscriptionType s = this.getSubscriptionTypeInstance();  //Overhead wouldn't be that much since all xxxxxSubscription classes are SINGLETONS
         this.allowedNotifTypes = s.getAllowedNotifTypes();
     }
 

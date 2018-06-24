@@ -1,7 +1,6 @@
 package me.prateek.notificationservice.client;
 
 import me.prateek.notificationservice.exception.IllegalTypeException;
-import me.prateek.notificationservice.exception.NullKeyException;
 import me.prateek.notificationservice.subscription.Subscription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

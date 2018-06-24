@@ -66,7 +66,8 @@ public class UserService {
         User u = userRepository.getOne(userId);
         u.setBlocked(status);
         userRepository.save(u);
-        return "User with userID" + userId + "blocked successfully";
+        if(status) return "User with userID " + userId + " blocked successfully";
+        else return "User with userID " + userId + " unblocked successfully";
     }
 
     public List<User> getAllUsers()

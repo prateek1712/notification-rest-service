@@ -1,5 +1,6 @@
 package me.prateek.notificationservice.user;
 
+import me.prateek.notificationservice.exception.IllegalTypeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,10 +13,23 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    //Function to check if id passed as Parameter is Integer or not
+    public boolean checkIfIdInteger(String id)
+    {
+        try {
+            Integer.parseInt(id);
+        }
+        catch(Exception e) {
+            throw new IllegalTypeException("id","Integer");
+        }
+        return true;
+    }
+
     //Get User Details Using id eg. /users?id=2
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public User getUser(@RequestParam Integer id) {
-        return userService.getUser(id);
+    public User getUser(@RequestParam String id) {
+        checkIfIdInteger(id);
+        return userService.getUser(Integer.parseInt(id));
     }
 
     //Create New User
@@ -26,14 +40,16 @@ public class UserController {
 
     //Update a User
     @RequestMapping(value = "/users/{id}", method = RequestMethod.PUT)
-    public User updateUser(@PathVariable Integer id, @RequestBody Map<String, String> body){
-        return userService.updateUser(id,body.get("name"),Integer.valueOf(body.get("phone")),body.get("email"));
+    public User updateUser(@PathVariable String id, @RequestBody Map<String, String> body){
+        checkIfIdInteger(id);
+        return userService.updateUser(Integer.parseInt(id),body.get("name"),Integer.valueOf(body.get("phone")),body.get("email"));
     }
 
     //Delete a User
     @RequestMapping(value = "/users/{id}", method = RequestMethod.DELETE)
-    public String deleteUser(@PathVariable Integer id) {
-        return userService.deleteUser(id);
+    public String deleteUser(@PathVariable String id) {
+        checkIfIdInteger(id);
+        return userService.deleteUser(Integer.parseInt(id));
     }
 
     //Return Number of Users
@@ -45,20 +61,18 @@ public class UserController {
 
     //Block a User
     @RequestMapping(value = "/users/{id}/block", method = RequestMethod.PUT)
-    public String blockUser(@PathVariable Integer id)
+    public String blockUser(@PathVariable String id)
     {
-        //TODO InvalidParameter Handling
-        userService.blockUnblockUser(id, true);
-        return "User with userID" + id + " blocked";
+        checkIfIdInteger(id);
+        return userService.blockUnblockUser(Integer.parseInt(id), true);
     }
 
     //Unblock a User
     @RequestMapping(value = "/users/{id}/unblock", method = RequestMethod.PUT)
-    public String unblockUser(@PathVariable Integer id)
+    public String unblockUser(@PathVariable String id)
     {
-        //TODO InvalidParameter Handling
-        userService.blockUnblockUser(id, false);
-        return "User with userID" + id + " unblocked";
+        checkIfIdInteger(id);
+        return userService.blockUnblockUser(Integer.parseInt(id), false);
     }
 
     //Get list of ALL Users

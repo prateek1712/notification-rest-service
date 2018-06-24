@@ -2,13 +2,18 @@
 package me.prateek.notificationservice.notification;
 
 
+import me.prateek.notificationservice.client.Client;
 import me.prateek.notificationservice.client.ClientService;
+import me.prateek.notificationservice.exception.GenericException;
+import me.prateek.notificationservice.exception.ResourceNotFoundException;
 import me.prateek.notificationservice.subscription.Subscription;
 import me.prateek.notificationservice.subscription.SubscriptionService;
 import me.prateek.notificationservice.subscription.SubscriptionType;
 import me.prateek.notificationservice.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class NotificationService {
@@ -24,7 +29,19 @@ public class NotificationService {
     @Autowired
     ClientService clientService;
 
-    public Notification getNotification(Integer id){ return notificationRepository.getOne(id); }
+    public void checkIfNotifPresent(Integer id)
+    {
+        Optional<Notification> notif = notificationRepository.findById(id);
+        if(!notif.isPresent())
+        {
+            throw new ResourceNotFoundException(id,"Notification");
+        }
+    }
+
+    public Notification getNotification(Integer id){
+        checkIfNotifPresent(id);
+        return notificationRepository.getOne(id);
+    }
 
     public Notification addNotification(Integer clientId, Integer userId, String notifType, String message)
     {
@@ -40,7 +57,7 @@ public class NotificationService {
         }
         NotificationType type = NotificationType.valueOf(notifType);
 
-        //Get Subscription for Client
+        //Get Subscription Details for Client
         Subscription sub = subscriptionService.getSubscriptionByClientId(clientId);
         if(sub.isSubscriptionActive()) //Check if subscription is active
         {
@@ -58,13 +75,13 @@ public class NotificationService {
                         //Return Notification
                         return notificationRepository.save(newNotif);
                     }
-                    else return null; //TODO Throw UserBlocked exception
+                    else throw new GenericException("User with userID " + userId + " is Blocked");
                 }
-                else return null; //TODO Throw NotificationTypeInvalid exception
+                else throw new GenericException("Notification Type Not Allowed: " + type + " for Client ID " + clientId);
             }
-            else return null; //TODO Throw DailyLimitReached exception
+            else throw new GenericException("Daily Notification Limit Reached for ClientID " + clientId);
         }
-        else return null; //TODO Throw SubscriptionNotActive exception
+        else throw new GenericException("Subscription Inactive for ClientID " + clientId);
     }
 
     //TODO Get Notification Count within a Date Range for a Client

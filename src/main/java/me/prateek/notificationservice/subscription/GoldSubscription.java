@@ -5,7 +5,7 @@ import me.prateek.notificationservice.notification.NotificationType;
 import java.util.HashSet;
 import java.util.Set;
 
-//A Constant Class
+//A Constant Singleton Class
 final class GoldSubscription extends SubscriptionType{
 
     //subscription ID
