@@ -77,16 +77,17 @@ mvn spring-boot:run
 | /users/{id} | DELETE | Delete Existing User |
 | /users/list | GET | Get List of all Users |
 | /users/{id}/block | PUT | Block User |
-| /users/{id}/block | PUT | Unblock User |
+| /users/{id}/unblock | PUT | Unblock User |
 
 ### Notification
 
 | URI | HTTP Method | Description |
 | --- | --- |--- |
-| /notifications?id={id} | GET | Get Details of Notification |
+| /notifications?id={id} | GET | Get Notification Details |
 | /notifications | POST | Send New Notification |
 | /notifications/remaining?clientId={clientId} | GET | Get Remaining Notification Count |
 
+Checkout the **docs** folder for detailed documentation of Requests & Responses.
 
 
 
