@@ -9,13 +9,26 @@ import java.util.Set;
 final class PlatinumSubscription extends SubscriptionType{
 
     //subscription ID
-    public final int ID = 3;
+    private final int ID = 3;
 
     //Price of subscription
-    public final int PRICE = 500;
+    private final int PRICE = 500;
 
     //Number of Notifications Allowed in a Day
-    public final int NOTIFS_ALLOWED_PER_DAY = Integer.MAX_VALUE; //Practically Unlimited
+    private final int NOTIFS_ALLOWED_PER_DAY = Integer.MAX_VALUE; //Practically Unlimited
+
+    //Types of Notifications Allowed: EMAIL, SMS, PUSH
+    private final Set<NotificationType> allowedNotifTypes;
+
+    // Initialisation block for allowedNotifTypes : Allowed All
+
+    {
+        allowedNotifTypes = new HashSet<NotificationType>(); //HashSet, since the order doesn't matter
+        for(NotificationType n : NotificationType.values())
+        {
+            allowedNotifTypes.add(n);
+        }
+    }
 
     public int getId() {
         return ID;
@@ -29,17 +42,8 @@ final class PlatinumSubscription extends SubscriptionType{
         return NOTIFS_ALLOWED_PER_DAY;
     }
 
-    //Types of Notifications Allowed: EMAIL, SMS, PUSH
-    public final Set<NotificationType> allowedNotifTypes;
-
-    // Initialisation block for allowedNotifTypes : Allowed All
-
-    {
-        allowedNotifTypes = new HashSet<NotificationType>(); //HashSet, since the order doesn't matter
-        for(NotificationType n : NotificationType.values())
-        {
-            allowedNotifTypes.add(n);
-        }
+    public Set<NotificationType> getAllowedNotifTypes() {
+        return allowedNotifTypes;
     }
 
     @Override

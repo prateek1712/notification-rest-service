@@ -1,6 +1,7 @@
 //SERVICE CLASS FOR 'CLIENT' MODEL
 package me.prateek.notificationservice.client;
 
+import me.prateek.notificationservice.exception.InvalidSubscriptionTypeException;
 import me.prateek.notificationservice.exception.ResourceNotFoundException;
 import me.prateek.notificationservice.subscription.Subscription;
 import me.prateek.notificationservice.subscription.SubscriptionService;
@@ -18,17 +19,22 @@ public class ClientService {
     @Autowired
     private SubscriptionService subscriptionService;
 
-    public Client getClient(Integer id){
-
-        Optional<Client> client = clientRepository.findById(id);
+    public void checkIfClientPresent(Integer clientId)
+    {
+        Optional<Client> client = clientRepository.findById(clientId);
         if(!client.isPresent())
         {
-            throw new ResourceNotFoundException(id,"Client");
+            throw new ResourceNotFoundException(clientId,"Client");
         }
-        return client.get();
     }
 
-    public Client addClient(String name, String address, String subscrType)
+    public Client getClient(Integer id){
+
+        checkIfClientPresent(id); //Check if client with id is present
+        return clientRepository.getOne(id);
+    }
+
+    public ClientResponse addClient(String name, String address, String subscrType)
     {
         //Input Validation for subscrType string
         boolean b = false;
@@ -40,30 +46,57 @@ public class ClientService {
                 b = true;
             }
         }
-        if(!b) return null;
+        if(!b)
+        {
+            throw new InvalidSubscriptionTypeException(subscrType);
+        }
 
         //Create new client
         Client c_saved = clientRepository.save(new Client(name, address));
 
         //Create new subscription for the client
         Integer clientId = c_saved.getId();
-        subscriptionService.addSubscription(clientId,subscrType);
-        return c_saved;
+        Subscription s_saved = subscriptionService.addSubscription(clientId,subscrType);
+        return new ClientResponse(c_saved, s_saved);
     }
 
-    public boolean deleteClient(Integer clientId)
+    public ClientResponse updateClient(Integer id, String name, String address, String subscrType)
     {
-        subscriptionService.deleteSubscription(clientId);
-        clientRepository.deleteById(clientId);
-        if(clientRepository.existsById(clientId))
+        //Input Validation for subscrType string
+        boolean b = false;
+        String[] allowed = {"GOLD", "SILVER", "PLATINUM"};
+        for(String s : allowed)
         {
-            return false;
+            if(subscrType.toUpperCase().equals(s))
+            {
+                b = true;
+            }
         }
-        return true;
+        if(!b)
+        {
+            throw new InvalidSubscriptionTypeException(subscrType);
+        }
+
+        //Create new client
+        Client c_saved = clientRepository.save(new Client(id, name, address));
+
+        //Create new subscription for the client
+        Subscription s = subscriptionService.getSubscriptionByClientId(id);
+        Integer subscriptionId = s.getId();
+        Subscription s_saved = subscriptionService.updateSubscription(subscriptionId, id, subscrType);
+        return new ClientResponse(c_saved, s_saved);
+    }
+
+    public void deleteClient(Integer clientId)
+    {
+        checkIfClientPresent(clientId); //Check if client with id is present
+        subscriptionService.deleteSubscription(clientId); //1. Delete client's subscription first
+        clientRepository.deleteById(clientId); //2. Delete client itself
     }
 
     public Subscription getClientSubscription(Integer clientId)
     {
+        checkIfClientPresent(clientId); //Check if client with id is present
         return subscriptionService.getSubscriptionByClientId(clientId);
     }
 

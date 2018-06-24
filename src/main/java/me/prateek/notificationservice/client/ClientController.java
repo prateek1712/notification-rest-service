@@ -19,6 +19,7 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
+    //Function to check if id passed as Parameter is Integer or not
     public boolean checkIfIdInteger(String id)
     {
         try {
@@ -48,25 +49,25 @@ public class ClientController {
 
     //Create New Client
     @RequestMapping(value = "/clients", method = RequestMethod.POST)
-    public Client newClient(@RequestBody Map<String, String> body) {
-        return clientService.addClient(body.get("name"),body.get("address"),body.get("subscription_type"));
+    public ClientResponse newClient(@RequestBody Map<String, String> body) {
+       return clientService.addClient(body.get("name"),body.get("address"),body.get("subscriptionType"));
     }
 
     //Update a Client
     @RequestMapping(value = "/clients/{id}", method = RequestMethod.PUT)
-    public Client updateClient(@PathVariable Integer id, @RequestBody Map<String, String> body){
-            Client c = new Client(id, body.get("name"), body.get("address"));
-            clientRepository.save(c);
-            return c;
+    public ClientResponse updateClient(@PathVariable String id, @RequestBody Map<String, String> body){
+        checkIfIdInteger(id);
+        clientService.checkIfClientPresent(Integer.parseInt(id));
+        return clientService.updateClient(Integer.parseInt(id), body.get("name"),body.get("address"),body.get("subscriptionType"));
     }
 
     //Delete a Client
     @RequestMapping(value = "/clients/{id}", method = RequestMethod.DELETE)
-    public String deleteClient(@PathVariable Integer id) {
-        //TODO Complete this DELETE method
-        if(clientService.deleteClient(id))
-            return "Client with id "+id+" deleted" ;
-        else return "Client Not Found";
+    public String deleteClient(@PathVariable String id) {
+        //TODO Improve Response on Client Deletion
+        checkIfIdInteger(id);
+        clientService.deleteClient(Integer.parseInt(id));
+        return "Client with id "+id+" deleted" ;
     }
 
     //Return Number of Clients

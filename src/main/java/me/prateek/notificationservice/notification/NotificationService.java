@@ -2,6 +2,7 @@
 package me.prateek.notificationservice.notification;
 
 
+import me.prateek.notificationservice.client.ClientService;
 import me.prateek.notificationservice.subscription.Subscription;
 import me.prateek.notificationservice.subscription.SubscriptionService;
 import me.prateek.notificationservice.subscription.SubscriptionType;
@@ -20,11 +21,15 @@ public class NotificationService {
     @Autowired
     UserService userService;
 
+    @Autowired
+    ClientService clientService;
+
     public Notification getNotification(Integer id){ return notificationRepository.getOne(id); }
 
     public Notification addNotification(Integer clientId, Integer userId, String notifType, String message)
     {
-        //TODO If ClientID or UserID not found, throw exception
+        clientService.checkIfClientPresent(clientId);
+        userService.checkIfUserPresent(userId);
 
         //Check if notification type is invalid
         notifType = notifType.toUpperCase();

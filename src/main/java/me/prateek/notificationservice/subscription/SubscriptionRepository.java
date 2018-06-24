@@ -13,7 +13,7 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, Inte
     Subscription findByClientId(Integer clientId);
 
     @Modifying   //To signify that it's SQL DDL which modifies the database & doesn't return anything (executeUpdate())
-    @Transactional
+    @Transactional //To signify that it's a Database Transaction
     @Query(value = "UPDATE Subscription SET NotifsSentToday = NotifsSentToday + 1 WHERE ClientID = ?1", nativeQuery=true)
     void incrementNotifCount(Integer clientId);
 

@@ -9,18 +9,16 @@ import java.util.Set;
 final class GoldSubscription extends SubscriptionType{
 
     //subscription ID
-    public  final int ID = 2;
+    private final int ID = 2;
 
     //Price of subscription
-    public  final int PRICE = 99;
+    private final int PRICE = 99;
 
     //Number of Notifications Allowed in a Day
-    public  final int NOTIFS_ALLOWED_PER_DAY = 10000000;
-
-
+    private final int NOTIFS_ALLOWED_PER_DAY = 10000000;
 
     //Types of Notifications Allowed: EMAIL, SMS, PUSH
-    public  final Set<NotificationType> allowedNotifTypes;
+    private final Set<NotificationType> allowedNotifTypes;
 
     public int getId() {
         return ID;
@@ -34,6 +32,10 @@ final class GoldSubscription extends SubscriptionType{
         return NOTIFS_ALLOWED_PER_DAY;
     }
 
+    public Set<NotificationType> getAllowedNotifTypes() {
+        return allowedNotifTypes;
+    }
+
     // Initialisation block for allowedNotifTypes : Allowed SMS & EMAIL
 
     {
@@ -43,7 +45,7 @@ final class GoldSubscription extends SubscriptionType{
     }
 
     @Override
-    public  boolean ifAllowedNotif(NotificationType n)
+    public boolean ifAllowedNotif(NotificationType n)
     {
         if(allowedNotifTypes.contains(n)) return true;
         return false;

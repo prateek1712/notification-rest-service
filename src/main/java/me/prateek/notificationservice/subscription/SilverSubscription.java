@@ -8,13 +8,23 @@ import java.util.Set;
 //A Constant Class
 final class SilverSubscription extends SubscriptionType{
     //subscription ID
-    public  final int ID = 1;
+    private final int ID = 1;
 
     //Price of Subscriptiontype
-    public  final int PRICE = 49;
+    private final int PRICE = 49;
 
     //Number of Notifications Allowed in a Day
-    public  final int NOTIFS_ALLOWED_PER_DAY = 10000000;
+    private final int NOTIFS_ALLOWED_PER_DAY = 1000000;
+
+    //Types of Notifications Allowed: EMAIL, SMS, PUSH
+    private final Set<NotificationType> allowedNotifTypes;
+
+    // Initialisation block for allowedNotifTypes : Allowed EMAIL only
+
+    {
+        allowedNotifTypes = new HashSet<NotificationType>();
+        allowedNotifTypes.add(NotificationType.EMAIL);
+    }
 
     public int getId() {
         return ID;
@@ -28,14 +38,8 @@ final class SilverSubscription extends SubscriptionType{
         return NOTIFS_ALLOWED_PER_DAY;
     }
 
-    //Types of Notifications Allowed: EMAIL, SMS, PUSH
-    public  final Set<NotificationType> allowedNotifTypes;
-
-    // Initialisation block for allowedNotifTypes : Allowed EMAIL only
-
-    {
-        allowedNotifTypes = new HashSet<NotificationType>();
-        allowedNotifTypes.add(NotificationType.EMAIL);
+    public Set<NotificationType> getAllowedNotifTypes() {
+        return allowedNotifTypes;
     }
 
     @Override
