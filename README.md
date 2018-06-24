@@ -1,28 +1,29 @@
 # Notification Service
 
 This is a RESTful API written in Java. It uses the following components:
+* MySQL
 * Maven
 * Spring Boot
 * Spring MVC
 * Spring Data JPA
-* MySQL
 * Docker
 
 ## About the Service
 A **Client** can subscribe to the service and send a **Notification** to a **User** using any of the following packages:
 
-| Subscription Type | Price | Daily Notification Limit | Notification Types Allowed |
+| Subscription Type | Price | Daily Notification Limit | Allowed Notification Types | 
 | --- | --- |--- | --- |
 | Silver | 49 | 1 Million | Email |
 | Gold | 99 | 10 Million | Email, SMS |
 | Platinum | 500 | Unlimited | Email, SMS, Push |
 
+All packages have a validity of a **Month** i.e 30 days.
 
 ## System Requirements
 
-1. Java SDK
-2. Maven 
-3. Docker CE
+1. [Java JDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+2. [Maven](https://maven.apache.org/download.cgi)
+3. [Docker CE](https://store.docker.com/search?type=edition&offering=community)
 
 ## Steps to Setup
 
@@ -84,7 +85,7 @@ mvn spring-boot:run
 | --- | --- |--- |
 | /notifications?id={id} | GET | Get Details of Notification |
 | /notifications | POST | Send New Notification |
-| /notifications/remaining/?clientId={clientId} | GET | Get Remaining Notification Count |
+| /notifications/remaining?clientId={clientId} | GET | Get Remaining Notification Count |
 
 
 
