@@ -28,14 +28,14 @@ public class NotificationController {
     }
 
     //Create New Notification
-    @RequestMapping(value = "/notification", method = RequestMethod.POST)
+    @RequestMapping(value = "/notifications", method = RequestMethod.POST)
     public Notification newNotification(@RequestBody Map<String,String> body)
     {
         return notificationService.addNotification(Integer.valueOf(body.get("clientId")),Integer.valueOf(body.get("userId")),body.get("type"),body.get("message"));
     }
 
     //Get Notification Status eg./notification?id=1
-    @RequestMapping(value = "/notification", method = RequestMethod.GET)
+    @RequestMapping(value = "/notifications", method = RequestMethod.GET)
     public Notification getNotification(@RequestParam String id)
     {
         checkIfIdInteger(id);
@@ -43,7 +43,7 @@ public class NotificationController {
     }
 
     //Get Notification eg./notification/remaining?clientId=1
-    @RequestMapping(value = "/notification/remaining", method = RequestMethod.GET)
+    @RequestMapping(value = "/notifications/remaining", method = RequestMethod.GET)
     public Integer getRemainingNotification(@RequestParam String clientId)
     {
         checkIfIdInteger(clientId);

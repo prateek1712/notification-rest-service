@@ -8,6 +8,16 @@ This is a RESTful API written in Java. It uses the following components:
 * MySQL
 * Docker
 
+## About the Service
+A **Client** can subscribe to the service and send a **Notification** to a **User** using any of the following packages:
+
+| Subscription Type | Price | Daily Notification Limit | Notification Types Allowed |
+| --- | --- |--- | --- |
+| Silver | 49 | 1 Million | Email |
+| Gold | 99 | 10 Million | Email, SMS |
+| Platinum | 500 | Unlimited | Email, SMS, Push |
+
+
 ## System Requirements
 
 1. Java SDK
@@ -42,3 +52,43 @@ Alternatively, you can run the app directly without packaging using:
 ```bash
 mvn spring-boot:run
 ```
+
+##Endpoints
+
+###Client
+
+| URI | HTTP Method | Description |
+| --- | --- |--- |
+| /clients?id={id} | GET | Get Details of Client |
+| /clients | POST | Create New Client |
+| /clients/{id} | PUT | Update Existing Client |
+| /clients/{id} | DELETE | Delete Existing Client |
+| /clients/{id}/subscription | GET | Get Subscription Details |
+| /clients/list | GET | Get List of all Clients |
+
+###User
+
+| URI | HTTP Method | Description |
+| --- | --- |--- |
+| /users?id={id} | GET | Get Details of User |
+| /users | POST | Create New User |
+| /users/{id} | PUT | Update Existing User |
+| /users/{id} | DELETE | Delete Existing User |
+| /users/list | GET | Get List of all Users |
+| /users/{id}/block | PUT | Block User |
+| /users/{id}/block | PUT | Unblock User |
+
+###Notification
+
+| URI | HTTP Method | Description |
+| --- | --- |--- |
+| /notifications?id={id} | GET | Get Details of Notification |
+| /notifications | POST | Send New Notification |
+| /notifications/remaining/?clientId={clientId} | GET | Get Remaining Notification Count |
+
+
+
+
+
+
+
