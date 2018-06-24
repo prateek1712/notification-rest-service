@@ -53,9 +53,9 @@ Alternatively, you can run the app directly without packaging using:
 mvn spring-boot:run
 ```
 
-##Endpoints
+## Endpoints
 
-###Client
+### Client
 
 | URI | HTTP Method | Description |
 | --- | --- |--- |
@@ -66,7 +66,7 @@ mvn spring-boot:run
 | /clients/{id}/subscription | GET | Get Subscription Details |
 | /clients/list | GET | Get List of all Clients |
 
-###User
+### User
 
 | URI | HTTP Method | Description |
 | --- | --- |--- |
@@ -78,7 +78,7 @@ mvn spring-boot:run
 | /users/{id}/block | PUT | Block User |
 | /users/{id}/block | PUT | Unblock User |
 
-###Notification
+### Notification
 
 | URI | HTTP Method | Description |
 | --- | --- |--- |
