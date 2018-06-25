@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
@@ -15,12 +16,15 @@ public class User{
     @Column(name = "UserID", nullable = false)
     private Integer id;
 
+    @NotNull
     @Column(name = "Name", nullable = false)
     private String name;
 
+    @NotNull
     @Column(name = "Phone", nullable = false)
     private Integer phone;
 
+    @NotNull
     @Column(name = "Email", nullable = false)
     private String email;
 

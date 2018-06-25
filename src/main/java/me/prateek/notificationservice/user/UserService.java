@@ -1,8 +1,12 @@
 package me.prateek.notificationservice.user;
 
 
+import me.prateek.notificationservice.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -10,8 +14,18 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    public void checkIfUserPresent(Integer userId)
+    {
+        Optional<User> user = userRepository.findById(userId);
+        if(!user.isPresent())
+        {
+            throw new ResourceNotFoundException(userId,"User");
+        }
+    }
+
     public User getUser(Integer userId)
     {
+        checkIfUserPresent(userId);
         return userRepository.getOne(userId);
     }
 
@@ -24,6 +38,7 @@ public class UserService {
 
     public User updateUser(Integer userId, String name, Integer phone, String email)
     {
+        checkIfUserPresent(userId);
         User u = userRepository.getOne(userId);
         u.setName(name);
         u.setPhone(phone);
@@ -32,10 +47,11 @@ public class UserService {
         return u;
     }
 
-    public String deleteUser(Integer id)
+    public String deleteUser(Integer userId)
     {
-        userRepository.deleteById(id);
-        return ("User with ID " + id + " deleted");
+        checkIfUserPresent(userId);
+        userRepository.deleteById(userId);
+        return ("User with ID " + userId + " deleted");
     }
 
     public Long countUsers()
@@ -46,10 +62,16 @@ public class UserService {
     public String blockUnblockUser(Integer userId, Boolean status)
     {
         //TODO Send Appropriate Response
+        checkIfUserPresent(userId);
         User u = userRepository.getOne(userId);
         u.setBlocked(status);
         userRepository.save(u);
-        return "User with userID" + userId + "blocked successfully";
+        if(status) return "User with userID " + userId + " blocked successfully";
+        else return "User with userID " + userId + " unblocked successfully";
     }
 
+    public List<User> getAllUsers()
+    {
+        return userRepository.findAll();
+    }
 }

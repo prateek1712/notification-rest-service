@@ -3,10 +3,12 @@ package me.prateek.notificationservice.subscription;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import me.prateek.notificationservice.notification.NotificationType;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.sql.Date;
+import java.util.Set;
 
 @Entity
 public class Subscription {
@@ -37,7 +39,10 @@ public class Subscription {
     @Column(name = "NotifsSentToday", nullable = false)
     private Integer notifsSentToday;
 
-    @JsonIgnore
+    @Transient //Not storing in database, but RETURNING AS JSON USING @PostLoad
+    private Set<NotificationType> allowedNotifTypes;
+
+    @JsonIgnore //Ignoring in JSON Output(Serialization)
     @Transient
     private SubscriptionType subscriptionTypeInstance = null;
 
@@ -51,7 +56,8 @@ public class Subscription {
 
 
         //2. Set type of Subscription
-        setSubscriptionTypeInstance(subType);
+        subscriptionType = subType.toUpperCase();
+        setSubscriptionTypeInstance(subscriptionType);
 
         //3. Set Notifications Sent
         this.notifsSentToday = 0;
@@ -65,6 +71,15 @@ public class Subscription {
 
         //6. Set Daily NotificationType Limit
         this.dailyNotifLimit = subscriptionTypeInstance.getNotifsAllowedPerDay();
+
+        //7. Set Allowed Notification Types;
+        this.allowedNotifTypes = subscriptionTypeInstance.getAllowedNotifTypes();
+    }
+
+    public Subscription(Integer id, Integer clientId, String subType)
+    {
+        this(clientId,subType);
+        this.id = id;
     }
 
     public Integer getId() {
@@ -97,6 +112,10 @@ public class Subscription {
         return dailyNotifLimit;
     }
 
+    public Set<NotificationType> getAllowedNotifTypes() {
+        return allowedNotifTypes;
+    }
+
     public boolean isSubscriptionActive() //Check if subscription is active
     {
         java.util.Date today = new java.util.Date();
@@ -110,8 +129,8 @@ public class Subscription {
     public boolean ifDailyLimitReached() //Check if daily notification limit reached
     {
         setSubscriptionTypeInstance(subscriptionType);
-        Integer limit = subscriptionTypeInstance.getNotifsAllowedPerDay();
-        if(notifsSentToday < limit)
+        //Integer limit = subscriptionTypeInstance.getNotifsAllowedPerDay();
+        if(notifsSentToday < dailyNotifLimit) //Change made from limit to dailyNotifLimit to dynamically get data from DB
         {
             return false;
         }
@@ -122,8 +141,7 @@ public class Subscription {
     {
         if(subscriptionTypeInstance == null)
         {
-            subscriptionType = subType.toUpperCase();
-            switch(subscriptionType)
+            switch(subType)
             {
                 case "SILVER":
                     subscriptionTypeInstance  = SilverSubscription.getInstance();
@@ -141,14 +159,20 @@ public class Subscription {
                     return;
             }
         }
-        else return;
     }
 
     public SubscriptionType getSubscriptionTypeInstance() {
-        if(subscriptionType == null)
+        if(subscriptionTypeInstance == null)
         {
             setSubscriptionTypeInstance(getSubscriptionType());
         }
         return subscriptionTypeInstance;
     }
+
+    @PostLoad //This function executes after a database retrieval by Spring JPA Repository(any method)
+    public void setAllowedNotifTypes() {
+        SubscriptionType s = this.getSubscriptionTypeInstance();  //Overhead wouldn't be that much since all xxxxxSubscription classes are SINGLETONS
+        this.allowedNotifTypes = s.getAllowedNotifTypes();
+    }
+
 }

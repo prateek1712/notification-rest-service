@@ -31,9 +31,8 @@ public class Client {
     }
 
     public Client(Integer id, String name, String address) {
+        this(name, address); //Constructor Chaining: Calls the above constructor
         this.id = id;
-        this.name = name;
-        this.address = address;
     }
 
     public Integer getId() {
